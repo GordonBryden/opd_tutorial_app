@@ -3,12 +3,15 @@ library(shiny)
 library(scotgov)
 library(dplyr)
 
-datasets <- scotgov::list_sg_datasets()
+devtools::install_github("DataScienceScotland/opendatascot")
+library(opendatascot)
+
+datasets <- opendatascot::ods_all_datasets()
 
 names_only <- datasets%>%
   select(dataset_name)
 
-structure_reactive <- reactive(get_structure(names_only[[1,1]]))
+structure_reactive <- reactive(opendatascot::ods_structure(opendatascot::ods_names[[1,1]]))
 
 ui <- fluidPage(
   sidebarLayout(
